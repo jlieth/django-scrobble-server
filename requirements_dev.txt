@@ -1,0 +1,8 @@
+tox
+pytest
+pytest-cov
+pytest-random-order
+pytest-django
+freezegun
+flake8
+black

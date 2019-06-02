@@ -1,0 +1,4 @@
+recursive-include scrobble_server *.py
+recursive-include tests *.py *.json
+include *.py *.md *.txt
+include MANIFEST.in LICENSE tox.ini
