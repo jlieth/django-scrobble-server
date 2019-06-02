@@ -1,0 +1,21 @@
+[
+{
+  "model": "v12.client",
+  "pk": 1,
+  "fields": {
+    "client_id": "test",
+    "client_version": "0.0.1",
+    "banned": false,
+    "created": "2019-05-29T10:39:40.928Z",
+    "last_seen": "2019-05-29T10:39:40.928Z"
+  }
+},
+{
+  "model": "v12.md5authhash",
+  "pk": 1,
+  "fields": {
+    "hash": "098f6bcd4621d373cade4e832627b4f6",
+    "profile": 1
+  }
+}
+]

@@ -1,0 +1,28 @@
+[
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$Bn0gwVebteoa$6mAg0TBQoSOulQ44L64AjWlASG2Hux0et8zeMLL4tHs=",
+    "last_login": "2019-05-29T10:39:40.928Z",
+    "is_superuser": false,
+    "username": "test",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2019-05-29T10:37:45.602Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.profile",
+  "pk": 1,
+  "fields": {
+    "user": 1,
+    "avatar": ""
+  }
+}
+]
