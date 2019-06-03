@@ -14,10 +14,10 @@ class BaseSubmission(models.Model):
 
     profile = models.ForeignKey("Profile", on_delete=models.CASCADE)
     artist = models.ForeignKey(
-        "Artist", on_delete=models.SET_NULL, blank=True, null=True
+        "Artist", on_delete=models.PROTECT, blank=True, null=True
     )
-    track = models.ForeignKey("Track", on_delete=models.SET_NULL, blank=True, null=True)
-    album = models.ForeignKey("Album", on_delete=models.SET_NULL, blank=True, null=True)
+    track = models.ForeignKey("Track", on_delete=models.PROTECT, blank=True, null=True)
+    album = models.ForeignKey("Album", on_delete=models.PROTECT, blank=True, null=True)
 
     class Meta:
         abstract = True

@@ -1,6 +1,3 @@
-import calendar
-import sys
-
 from django.test import TestCase
 from django.utils import timezone
 
@@ -13,10 +10,7 @@ class ScrobbleTests(BaseSubmissionTests, TestCase):
 
     def test_date(self):
         now = timezone.now()
-        if sys.version_info.major == 2:
-            timestamp = calendar.timegm(now.timetuple())
-        else:
-            timestamp = now.timestamp()
+        timestamp = now.timestamp()
 
         scrobble = Scrobble.objects.create(
             profile=self.profile,

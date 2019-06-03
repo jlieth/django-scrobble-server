@@ -36,9 +36,9 @@ class NowPlayingTests(BaseSubmissionTests, TestCase):
 
     def test_is_not_over(self):
         self.length = 1000
-        self.create_submission_object()
-        self.assertFalse(self.obj.is_over())
+        obj = self.create_object()
+        self.assertFalse(obj.is_over())
 
         self.length = 0
-        self.create_submission_object()
-        self.assertTrue(self.obj.is_over())
+        obj = self.create_object()
+        self.assertTrue(obj.is_over())
