@@ -1,6 +1,4 @@
-import calendar
 import hashlib
-import sys
 
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse, HttpResponseBadRequest
@@ -40,10 +38,7 @@ def handshake(request):
         return HttpResponseBadRequest("BADTIME")
 
     # difference submitted timestamp and real timestamp
-    if sys.version_info.major == 2:
-        timediff = calendar.timegm(timezone.now().timetuple()) - int(timestamp)
-    else:
-        timediff = timezone.now().timestamp() - int(timestamp)
+    timediff = timezone.now().timestamp() - int(timestamp)
     if abs(timediff) > 86400:
         return HttpResponseBadRequest("BADTIME")
 
