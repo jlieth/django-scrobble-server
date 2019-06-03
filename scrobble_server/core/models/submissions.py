@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.utils import timezone
 
@@ -27,6 +29,12 @@ class BaseSubmission(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:  # on_create
             self._link_to_music_objects()
+
+        # make sure length and tracknumber are not None
+        if self.length is None:
+            self.length = 0
+        if self.tracknumber is None:
+            self.tracknumber = 0
 
         super().save(*args, **kwargs)
 
@@ -74,6 +82,11 @@ class NowPlaying(BaseSubmission):
         now = timezone.now()
         return now > playback_end
 
+    def save(self, *args, **kwargs):
+        # delete stale nowplayings of this user before saving
+        NowPlaying.objects.filter(profile=self.profile).delete()
+        super().save(*args, **kwargs)
+
 
 class Scrobble(BaseSubmission):
     timestamp = models.PositiveIntegerField()
@@ -86,3 +99,9 @@ class Scrobble(BaseSubmission):
         indexes = [models.Index(fields=["date"])]
         ordering = ["-date"]
         unique_together = ["profile", "timestamp"]
+
+    def save(self, *args, **kwargs):
+        # set date from timestamp
+        dt = datetime.datetime.utcfromtimestamp(self.timestamp)
+        self.date = timezone.make_aware(dt, timezone.utc)
+        super().save(*args, **kwargs)
