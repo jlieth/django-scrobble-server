@@ -6,7 +6,6 @@ from django.dispatch import receiver
 from django.utils import timezone
 
 from scrobble_server.core.models.profile import Profile
-from scrobble_server.core.models.music import Album, AlbumTrackUnit, Artist, Track
 from scrobble_server.core.models.submissions import NowPlaying, Scrobble
 
 User = get_user_model()
@@ -48,35 +47,3 @@ def process_any_submission(sender, instance, **kwargs):
     # make sure length and tracknumber are not None
     instance.length = instance.length or 0
     instance.tracknumber = instance.tracknumber or 0
-
-
-@receiver(pre_save, sender=NowPlaying)
-@receiver(pre_save, sender=Scrobble)
-def link_submission_object_to_music_objects(sender, instance, **kwargs):
-    # get_or_create and link music objects
-    if not instance.artist:
-        artist_name = instance.artist_name
-        artist, created = Artist.objects.get_or_create(
-            name__iexact=artist_name, defaults={"name": artist_name}
-        )
-        instance.artist = artist
-
-    if not instance.track:
-        track_title = instance.track_title
-        track, created = Track.objects.get_or_create(
-            title__iexact=track_title, artist=artist, defaults={"title": track_title}
-        )
-        instance.track = track
-
-    if not instance.album and instance.album_title:
-        album_title = instance.album_title
-        album, created = Album.objects.get_or_create(
-            title__iexact=album_title, artist=artist, defaults={"title": album_title}
-        )
-        instance.album = album
-        AlbumTrackUnit.objects.get_or_create(
-            track=track,
-            album=album,
-            tracknumber=instance.tracknumber,
-            defaults={"length": instance.length},
-        )
