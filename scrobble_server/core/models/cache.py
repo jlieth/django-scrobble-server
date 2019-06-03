@@ -27,7 +27,6 @@ class ChartsCache(models.Model):
     max_listen_count = models.IntegerField()
 
     class Meta:
-        base_manager_name = "objects"
         indexes = [models.Index(fields=["category", "timespan", "date"])]
         unique_together = [
             ["content_type", "object_id", "category", "timespan", "date"]
