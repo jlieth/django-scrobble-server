@@ -51,7 +51,6 @@ class ScrobbleAdmin(admin.ModelAdmin):
         "length",
         "tracknumber",
     ]
-    list_filter = ["date"]
     date_hierarchy = "date"
     search_fields = ["track_title", "artist_name", "album_title"]
     raw_id_fields = ["profile", "artist", "album", "track"]
@@ -70,7 +69,7 @@ class NowPlayingAdmin(admin.ModelAdmin):
         "tracknumber",
         "is_over",
     ]
-    list_filter = ["date"]
+    date_hierarchy = "date"
     raw_id_fields = ["profile", "artist", "album", "track"]
     readonly_fields = ["date"]
 
@@ -110,4 +109,5 @@ class UserChartCacheAdmin(admin.ModelAdmin):
         "total_listens",
         "max_listen_count",
     ]
-    list_filter = ["category", "timespan", "date"]
+    list_filter = ["category", "timespan"]
+    date_hierarchy = "date"
