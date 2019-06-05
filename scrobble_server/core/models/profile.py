@@ -1,5 +1,3 @@
-import json
-
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
 from django.contrib.contenttypes.fields import GenericRelation
@@ -55,52 +53,3 @@ class Profile(models.Model):
             return False
 
         return True
-
-    def generate_year_charts(self, date=None):
-        if date:
-            dates = [date]
-        else:
-            dates = self.scrobbles.dates("date", "year")
-
-        for d in dates:
-            qs = self.scrobbles.filter(date__year=d.year)
-            scrobblecount = qs.scrobblecount()
-
-            # artists
-            toplist = qs.top_artists()
-            self.charts.update_or_create(
-                category="artists",
-                timespan="y",
-                date=d,
-                defaults={
-                    "toplist": json.dumps(list(toplist)),
-                    "total_listens": scrobblecount,
-                    "max_listen_count": toplist.maxcount(),
-                },
-            )
-
-            # albums
-            toplist = qs.top_albums()
-            self.charts.update_or_create(
-                category="albums",
-                timespan="y",
-                date=d,
-                defaults={
-                    "toplist": json.dumps(list(toplist)),
-                    "total_listens": scrobblecount,
-                    "max_listen_count": toplist.maxcount(),
-                },
-            )
-
-            # tracks
-            toplist = qs.top_tracks()
-            self.charts.update_or_create(
-                category="tracks",
-                timespan="y",
-                date=d,
-                defaults={
-                    "toplist": json.dumps(list(toplist)),
-                    "total_listens": scrobblecount,
-                    "max_listen_count": toplist.maxcount(),
-                },
-            )
